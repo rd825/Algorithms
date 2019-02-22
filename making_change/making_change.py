@@ -4,15 +4,18 @@ import sys
 
 
 def making_change(amount, denominations):
-    if amount < 0 or len(denominations) == 0:
-        return 0
-    elif amount == 0:
+    return change(amount, denominations, len(denominations))
+
+
+def change(amount, denomination, length):
+    if amount == 0:
         return 1
+    elif amount < 0:
+        return 0
+    elif (length <= 0 and amount >= 1):
+        return 0
     else:
-        ways = 0
-        for i in range(len(denominations)):
-            ways += making_change(amount - denominations[i], denominations)
-        return ways
+        return change(amount, denomination, length - 1) + change(amount - denomination[length - 1], denomination, length)
 
 
 print(making_change(10, [1, 5, 10, 25, 50]))
